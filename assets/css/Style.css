@@ -1,0 +1,165 @@
+@font-face {
+    font-family: '29ltbukrabold';
+    src: url('../fonts/29ltbukrabold.ttf') format('truetype');
+}
+body {
+    font-family: '29ltbukrabold', Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+header {
+    background-color: #333;
+    padding: 10px;
+}
+
+nav {
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+    margin-right: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #8078e7;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+a.active {
+    border-bottom: 2px solid #fff;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+.product {
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between;
+}
+.product img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    border: 1px dashed rgb(138, 138, 170);
+    height: auto;
+    margin-right: 2.5%;
+}
+.product-info {
+    max-width: 45%; 
+    text-align: left;
+}
+.add-to-cart-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: '29ltbukrabold';
+    font-size: 16px;
+}
+.shopping-cart {
+    margin-top: 30px;
+    text-align: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: right;
+}
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+#checkoutForm {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+#checkoutForm h2 {
+    color: #333;
+}
+
+#checkoutForm label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #555;
+}
+
+#checkoutForm input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+#captchaContainer {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#checkoutForm button:hover {
+    background-color: #45a049;
+}
+
+#checkoutForm .success-message {
+    color: #4caf50;
+    margin-top: 15px;
+}
+
+#checkoutForm .error-message {
+    color: #f44336;
+    margin-top: 15px;
+}

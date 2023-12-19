@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/Style.css" />
+    <title>المنتجات</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="home.html">الرئيسية</a></li>
+          <li><a href="AboutUs.html">من نحن</a></li>
+          <li><a href="Appliances.html" class="active">المنتجات</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div
+        class="shopping-cart"
+        style="display: none"
+        id="shoppingCartContainer"
+      >
+        <h2>سلة المشتريات</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>المنتج</th>
+              <th>السعر</th>
+              <th>الكمية</th>
+              <th>السعر الإجمالي</th>
+            </tr>
+          </thead>
+          <tbody id="cartItems"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3">اجمالي الفاتورة</td>
+              <td id="totalAmount">0.00 ل.س</td>
+            </tr>
+            <tr>
+              <td colspan="3">الضريبة (5%)</td>
+              <td id="taxAmount">0.00 ل.س</td>
+            </tr>
+            <tr>
+              <td colspan="3">صافي الفاتورة</td>
+              <td id="netAmount">0.00 ل.س</td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <button onclick="clearCart()">الغاء</button>
+        <button onclick="showCheckoutForm()">متابعة</button>
+      </div>
+
+      <div id="checkoutForm" style="display: none">
+        <h2>نموذج الشراء</h2>
+        <p style="color: red" id="errorMessage"></p>
+        <p style="color: green" id="successMessage"></p>
+
+        <form id="purchaseForm">
+          <label for="fullName">الإسم الكامل:</label>
+          <input type="text" id="fullName" name="fullName" pattern="[أ-ي]+" />
+
+          <label for="nationalId">الرقم الوطني:</label>
+          <input
+            type="text"
+            id="nationalId"
+            name="nationalId"
+            pattern="[01][0-9]{9}"
+            required
+          />
+
+          <label for="birthDate">تاريخ الولادة:</label>
+          <input
+            type="text"
+            id="birthDate"
+            name="birthDate"
+            placeholder="dd-mm-yyyy"
+            pattern="\d{2}-\d{2}-\d{4}"
+          />
+
+          <label for="mobileNumber">رقم الموبايل:</label>
+          <input
+            type="text"
+            id="mobileNumber"
+            name="mobileNumber"
+            pattern="09[0-9]{8}"
+          />
+
+          <label for="email">الإيميل:</label>
+          <input type="email" id="email" name="email" />
+
+          <div id="captchaContainer">
+            <div id="captcha" onclick="refreshCaptcha()">
+              CAPTCHA: <span id="captchaValue"></span>
+            </div>
+            <label for="captchaInput">الكود:</label>
+            <input type="text" id="captchaInput" name="captchaInput" required />
+          </div>
+
+          <button type="button" onclick="completePurchase()">
+            اكمال الشراء
+          </button>
+        </form>
+      </div>
+
+      <h1>المنتجات</h1>
+
+      <div class="product" id="product1">
+        <img src="assets/img/product1.jpg" alt="مروحة كهربائية" />
+        <h2>مروحة كهربائية</h2>
+        <p>منتج عالي الأداء لتبريد الهواء في أي مكان.</p>
+        <p>السعر: 1500 ل.س</p>
+        <button
+          class="add-to-cart-button"
+          onclick="addToCart('product1', 'مروحة كهربائية', 1500)"
+        >
+          اضافة إلى السلة
+        </button>
+      </div>
+
+      <div class="product" id="product2">
+        <img src="assets/img/product2.jpg" alt="مكواة بخار" />
+        <h2>مكواة بخار</h2>
+        <p>مكواة كهربائية مع تقنية البخار لكي الملابس بسهولة.</p>
+        <p>السعر: 1200 ل.س</p>
+        <button
+          class="add-to-cart-button"
+          onclick="addToCart('product2', 'مكواة بخار', 1200)"
+        >
+          اضافة إلى السلة
+        </button>
+      </div>
+
+      <div class="product" id="product3">
+        <img src="assets/img/product3.jpg" alt="غسالة ملابس" />
+        <h2>غسالة ملابس</h2>
+        <p>غسالة كهربائية فعالة لتنظيف الملابس بفعالية.</p>
+        <p>السعر: 2500 ل.س</p>
+        <button
+          class="add-to-cart-button"
+          onclick="addToCart('product3', 'غسالة ملابس', 2500)"
+        >
+          اضافة إلى السلة
+        </button>
+      </div>
+
+      <div class="product" id="product4">
+        <img src="assets/img/product4.jpg" alt="مكيف هواء" />
+        <h2>مكيف هواء</h2>
+        <p>مكيف هواء قوي لتحسين جودة الهواء في المنزل.</p>
+        <p>السعر: 3500 ل.س</p>
+        <button
+          class="add-to-cart-button"
+          onclick="addToCart('product4', 'مكيف هواء', 3500)"
+        >
+          اضافة إلى السلة
+        </button>
+      </div>
+
+      <div class="product" id="product5">
+        <img src="assets/img/product5.jpg" alt="شاحن هاتف" />
+        <h2>شاحن هاتف</h2>
+        <p>شاحن كهربائي سريع لشحن أجهزة الهاتف المحمولة.</p>
+        <p>السعر: 500 ل.س</p>
+        <button
+          class="add-to-cart-button"
+          onclick="addToCart('product5', 'شاحن هاتف', 500)"
+        >
+          اضافة إلى السلة
+        </button>
+      </div>
+
+      <div class="product" id="product6">
+        <img src="assets/img/product6.jpg" alt="خلاط كهربائي" />
+        <h2>خلاط كهربائي</h2>
+        <p>خلاط متعدد الوظائف لتحضير مجموعة متنوعة من المشروبات.</p>
+        <p>السعر: 1800 ل.س</p>
+        <button
+          class="add-to-cart-button"
+          onclick="addToCart('product6', 'خلاط كهربائي', 1800)"
+        >
+          اضافة إلى السلة
+        </button>
+      </div>
+
+      <div class="product" id="product7">
+        <img src="assets/img/product7.jpg" alt="فرن كهربائي" />
+        <h2>فرن كهربائي</h2>
+        <p>فرن كهربائي متعدد الاستخدامات لخبز وشواء الطعام.</p>
+        <p>السعر: 2800 ل.س</p>
+        <button
+          class="add-to-cart-button"
+          onclick="addToCart('product7', 'فرن كهربائي', 2800)"
+        >
+          اضافة إلى السلة
+        </button>
+      </div>
+
+      <div class="product" id="product8">
+        <img src="assets/img/product8.jpg" alt="مروحة سقف" />
+        <h2>مروحة سقف</h2>
+        <p>مروحة سقف كهربائية لتوفير تدفق هواء ممتاز في الغرف.</p>
+        <p>السعر: 2000 ل.س</p>
+        <button
+          class="add-to-cart-button"
+          onclick="addToCart('product8', 'مروحة سقف', 2000)"
+        >
+          اضافة إلى السلة
+        </button>
+      </div>
+
+      <div class="product" id="product9">
+        <img src="assets/img/product9.jpg" alt="محمصة خبز" />
+        <h2>محمصة خبز</h2>
+        <p>محمصة كهربائية لتحميص الخبز بسرعة وسهولة.</p>
+        <p>السعر: 1200 ل.س</p>
+        <button
+          class="add-to-cart-button"
+          onclick="addToCart('product9', 'محمصة خبز', 1200)"
+        >
+          اضافة إلى السلة
+        </button>
+      </div>
+
+      <div class="product" id="product10">
+        <img src="assets/img/product10.jpg" alt="فرن كهربائي" />
+        <h2>فرن كهربائي</h2>
+        <p>فرن كهربائي متعدد الاستخدامات لخبز وشواء الطعام.</p>
+        <p>السعر: 2800 ل.س</p>
+        <button
+          class="add-to-cart-button"
+          onclick="addToCart('product10', 'فرن كهربائي', 2800)"
+        >
+          اضافة إلى السلة
+        </button>
+      </div>
+    </main>
+
+    <footer>
+      <p>الجامعة الإفتراضية السورية 2023-2024</p>
+    </footer>
+
+    <script>
+      function addToCart(productId, productName, productPrice) {
+        var cartItems = document.getElementById("cartItems");
+        var totalAmountCell = document.getElementById("totalAmount");
+        var taxAmountCell = document.getElementById("taxAmount");
+        var netAmountCell = document.getElementById("netAmount");
+        var shoppingCartContainer = document.getElementById(
+          "shoppingCartContainer"
+        );
+
+        var found = false;
+
+        // التحقق مما إذا كان المنتج قد تمت إضافته بالفعل
+        for (var i = 0; i < cartItems.rows.length; i++) {
+          var row = cartItems.rows[i];
+          if (row.cells[0].innerHTML === productName) {
+            // زيادة الكمية إذا كان المنتج موجود بالفعل
+            var quantityCell = row.cells[2];
+            var quantity = parseInt(quantityCell.innerHTML);
+            quantityCell.innerHTML = quantity + 1;
+
+            // حساب السعر الإجمالي
+            var totalCell = row.cells[3];
+            var totalPrice = parseFloat(productPrice) * (quantity + 1);
+            totalCell.innerHTML = totalPrice.toFixed(2) + " ل.س";
+
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          // إضافة سطر جديد إذا لم يكن المنتج موجود بالفعل
+          var newRow = cartItems.insertRow();
+          var cell1 = newRow.insertCell(0);
+          var cell2 = newRow.insertCell(1);
+          var cell3 = newRow.insertCell(2);
+          var cell4 = newRow.insertCell(3);
+          cell1.innerHTML = productName;
+          cell2.innerHTML = productPrice + " ل.س";
+          cell3.innerHTML = 1;
+
+          // حساب السعر الإجمالي
+          var totalPrice = parseFloat(productPrice) * 1;
+          cell4.innerHTML = totalPrice.toFixed(2) + " ل.س";
+        }
+
+        // حساب إجمالي الفاتورة
+        var totalAmount = 0;
+        for (var i = 0; i < cartItems.rows.length; i++) {
+          var row = cartItems.rows[i];
+          totalAmount += parseFloat(row.cells[3].innerHTML);
+        }
+        totalAmountCell.innerHTML = totalAmount.toFixed(2) + " ل.س";
+
+        // حساب الضريبة (5%)
+        var taxAmount = totalAmount * 0.05;
+        taxAmountCell.innerHTML = taxAmount.toFixed(2) + " ل.س";
+
+        // حساب صافي الفاتورة
+        var netAmount = totalAmount + taxAmount;
+        netAmountCell.innerHTML = netAmount.toFixed(2) + " ل.س";
+
+        // إخفاء أو إظهار سلة المشتريات
+        if (cartItems.rows.length > 0) {
+          shoppingCartContainer.style.display = "block";
+        } else {
+          shoppingCartContainer.style.display = "none";
+        }
+      }
+
+      function clearCart() {
+        // إفراغ سلة المشتريات
+        var cartItems = document.getElementById("cartItems");
+        while (cartItems.firstChild) {
+          cartItems.removeChild(cartItems.firstChild);
+        }
+
+        // إخفاء سلة المشتريات
+        var shoppingCartContainer = document.getElementById(
+          "shoppingCartContainer"
+        );
+        shoppingCartContainer.style.display = "none";
+      }
+
+      function showCheckoutForm() {
+        // إظهار نموذج الشراء
+        var checkoutForm = document.getElementById("checkoutForm");
+        checkoutForm.style.display = "block";
+      }
+
+      function completePurchase() {
+        // التحقق من المدخلات والكابتشا
+        var fullName = document.getElementById("fullName").value;
+        var nationalId = document.getElementById("nationalId").value;
+        var birthDate = document.getElementById("birthDate").value;
+        var mobileNumber = document.getElementById("mobileNumber").value;
+        var email = document.getElementById("email").value;
+
+         // التحقق من CAPTCHA
+         var captchaInput = document.getElementById("captchaInput").value;
+        if (!validateCaptcha(captchaInput)) {
+          showError("الرمز غير صحيح. حاول مرة أخرى.");
+          return;
+        }
+
+        // التحقق من البيانات
+        if (
+          !validateFormData(
+            fullName,
+            nationalId,
+            birthDate,
+            mobileNumber,
+            email
+          )
+        ) {
+         // showError("يرجى ملء جميع الحقول بشكل صحيح");
+          return;
+        }
+
+        // عرض رسالة باتمام الشراء مع قيمة صافي الفاتورة
+        var netAmountCell = document.getElementById("netAmount");
+        var successMessage = document.getElementById("successMessage");
+        var errorMessage = document.getElementById("errorMessage");
+
+        successMessage.style.display = "none";
+        errorMessage.style.display = "none";
+
+        successMessage.innerHTML =
+          "تم بنجاح! قيمة صافي الفاتورة: " + netAmountCell.innerHTML;
+        successMessage.style.display = "block";
+      }
+
+      // الوظائف اللازمة للتحقق من البيانات وCAPTCHA
+
+      function validateFormData(
+        fullName,
+        nationalId,
+        birthDate,
+        mobileNumber,
+        email
+      ) {
+        // التحقق من أن الإسم يحتوي على أحرف عربية فقط
+        var nameRegex = /[أ-ي]/;
+        if (fullName && !nameRegex.test(fullName)) {
+          showError("الرجاء إدخال إسم صحيح");
+          return false;
+        }
+
+        // التحقق من أن الرقم الوطني يحتوي على 10 أرقام ويبدأ بـ 0 أو 1
+        var nationalIdRegex = /^[01][0-9]{10}$/;
+        if (!nationalIdRegex.test(nationalId)) {
+          showError("الرجاء إدخال رقم وطني صحيح");
+          return false;
+        }
+
+        // التحقق من تنسيق تاريخ الميلاد (dd-mm-yyyy)
+        var birthDateRegex = /^\d{2}-\d{2}-\d{4}$/;
+        if (birthDate && !birthDateRegex.test(birthDate)) {
+          showError("الرجاء إدخال تاريخ ميلاد صحيح");
+          return false;
+        }
+
+        // التحقق من أن رقم الموبايل يحتوي على 10 أرقام ويبدأ بـ 09
+        var mobileNumberRegex = /^09[0-9]{8}$/;
+        if (mobileNumber && !mobileNumberRegex.test(mobileNumber)) {
+          showError("الرجاء إدخال رقم موبايل صحيح");
+          return false;
+        }
+
+        // التحقق من صحة البريد الإلكتروني (اختياري)
+        if (email && !validateEmail(email)) {
+          showError("الرجاء إدخال بريد إلكتروني صحيح");
+          return false;
+        }
+
+        // جميع المعلومات صحيحة
+        return true;
+      }
+
+      function validateEmail(email) {
+        // دالة للتحقق من صحة البريد الإلكتروني (يمكن تحسينها)
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      function validateCaptcha(captchaInput) {
+        // يمكنك تحسين هذه الدالة وفقًا لاحتياجاتك
+        var correctCaptcha = document.getElementById("captchaValue").innerText; // قيمة الكابتشا الصحيحة
+        return captchaInput === correctCaptcha;
+      }
+
+      function refreshCaptcha() {
+        var captchaValue = generateCaptcha();
+        document.getElementById("captchaValue").innerText = captchaValue;
+      }
+
+      function generateCaptcha() {
+        // هنا يمكنك إنشاء كود CAPTCHA وعرضه للمستخدم
+        var captchaValue = Math.floor(Math.random() * 10000); // مثال بسيط
+        return captchaValue.toString();
+      }
+
+      function showError(message) {
+        var errorMessage = document.getElementById("errorMessage");
+        errorMessage.innerHTML = message;
+        errorMessage.style.display = "block";
+      }
+
+      refreshCaptcha();
+    </script>
+  </body>
+</html>
